@@ -1,11 +1,15 @@
 package com.practise.banking.DTO;
 
 import com.practise.banking.Enum.CustomerStatus;
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
+import org.jspecify.annotations.NonNull;
 
 import java.util.Date;
+import java.util.List;
 
-@Entity(name = "customer")
+@Entity
+@Table(schema = "banking", name = "customer")
 public class Customer {
 
     @Id
@@ -13,24 +17,35 @@ public class Customer {
     @Column(name = "customer_id")
     private long customerId;
 
-    private String fristname;
+    @Nonnull
+    private String firstname;
     private String lastname;
-    private String dateofbirth;
+    private Date dateofbirth;
     private String email;
     private long phonenumber;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "Street", column = @Column(name = "street")),
+            @AttributeOverride(name = "City", column = @Column(name = "city")),
+            @AttributeOverride(name = "State", column = @Column(name = "state")),
+            @AttributeOverride(name = "postalcode", column = @Column(name = "postalcode"))
+    })
     private Address address;
+
     private Date createdAt;
+
+    @Enumerated(EnumType.STRING)
     private CustomerStatus status;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @OneToMany(mappedBy = "customerId",cascade = CascadeType.ALL)
+    private List<Account> account;
 
-    public Account getAccount() {
+    public List<Account> getAccount() {
         return account;
     }
 
-    public void setAccount(Account account) {
+    public void setAccount(List<Account> account) {
         this.account = account;
     }
 
@@ -42,12 +57,12 @@ public class Customer {
         this.customerId = customerId;
     }
 
-    public String getFristname() {
-        return fristname;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFristname(String fristname) {
-        this.fristname = fristname;
+    public void setFirstname(@NonNull String firstname) {
+        this.firstname = firstname;
     }
 
     public String getLastname() {
@@ -58,11 +73,11 @@ public class Customer {
         this.lastname = lastname;
     }
 
-    public String getDateofbirth() {
+    public Date getDateofbirth() {
         return dateofbirth;
     }
 
-    public void setDateofbirth(String dateofbirth) {
+    public void setDateofbirth(Date dateofbirth) {
         this.dateofbirth = dateofbirth;
     }
 
@@ -110,7 +125,7 @@ public class Customer {
     public String toString() {
         return "Customer{" +
                 "customerId=" + customerId +
-                ", fristname='" + fristname + '\'' +
+                ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", dateofbirth='" + dateofbirth + '\'' +
                 ", email='" + email + '\'' +
@@ -118,6 +133,7 @@ public class Customer {
                 ", address=" + address +
                 ", createdAt=" + createdAt +
                 ", status=" + status +
+                ", account=" + account +
                 '}';
     }
 }

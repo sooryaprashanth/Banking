@@ -1,5 +1,6 @@
 package com.practise.banking.DTO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.practise.banking.Enum.AccountType;
 import com.practise.banking.Enum.AccuontStatus;
 import com.practise.banking.Enum.Currency;
@@ -9,32 +10,39 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity(name = "account")
+@Entity
+@Table(schema = "banking",name = "account")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "account_id")
-    private UUID accountId;
+    private long accountId;
 
     private long accountNumber;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonIgnore
     private Customer customerId;
 
+    @Enumerated(EnumType.STRING)
     private AccountType accountType;
     private double balance;
+
+    @Enumerated(EnumType.STRING)
     private Currency currency;
+
+    @Enumerated(EnumType.STRING)
     private AccuontStatus status;
 
     private Date createdDate;
-    private Date lastUpdatedDate;
+    private Date lastupdatedDate;
 
-    public UUID getAccountId() {
+    public long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(UUID accountId) {
+    public void setAccountId(long accountId) {
         this.accountId = accountId;
     }
 
@@ -94,12 +102,12 @@ public class Account {
         this.createdDate = createdDate;
     }
 
-    public Date getLastUpdatedDate() {
-        return lastUpdatedDate;
+    public Date getlastupdatedDate() {
+        return lastupdatedDate;
     }
 
-    public void setLastUpdatedDate(Date lastUpdatedDate) {
-        this.lastUpdatedDate = lastUpdatedDate;
+    public void setlastupdatedDate(Date lastupdatedDate) {
+        this.lastupdatedDate = lastupdatedDate;
     }
 
     @Override
@@ -113,7 +121,7 @@ public class Account {
                 ", currency=" + currency +
                 ", status=" + status +
                 ", createdDate=" + createdDate +
-                ", lastUpdatedDate=" + lastUpdatedDate +
+                ", lastupdatedDate=" + lastupdatedDate +
                 '}';
     }
 }

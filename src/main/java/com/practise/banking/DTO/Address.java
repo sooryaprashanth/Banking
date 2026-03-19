@@ -1,10 +1,13 @@
 package com.practise.banking.DTO;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public class Address {
     private String Street;
     private String City;
     private String State;
-    private long postalcode;
+    private String postalcode;
 
     public String getStreet() {
         return Street;
@@ -30,11 +33,11 @@ public class Address {
         State = state;
     }
 
-    public long getPostalcode() {
+    public String getPostalcode() {
         return postalcode;
     }
 
-    public void setPostalcode(long postalcode) {
+    public void setPostalcode(String postalcode) {
         this.postalcode = postalcode;
     }
 

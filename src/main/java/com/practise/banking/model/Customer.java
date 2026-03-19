@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Customer {
     private long customerId;
-    private String fristname;
+    private String firstname;
     private String lastname;
     private String dateofbirth;
     private String email;
@@ -23,12 +23,12 @@ public class Customer {
         this.customerId = customerId;
     }
 
-    public String getFristname() {
-        return fristname;
+    public String getfirstname() {
+        return firstname;
     }
 
-    public void setFristname(String fristname) {
-        this.fristname = fristname;
+    public void setfirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public String getLastname() {
@@ -91,7 +91,7 @@ public class Customer {
     public String toString() {
         return "Customer{" +
                 "customerId=" + customerId +
-                ", fristname='" + fristname + '\'' +
+                ", firstname='" + firstname + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", dateofbirth='" + dateofbirth + '\'' +
                 ", email='" + email + '\'' +
