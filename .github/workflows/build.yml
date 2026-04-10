@@ -1,0 +1,26 @@
+name: Build Docker image
+
+on: 
+  push:
+    branches: 
+      - master
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: action/checkout@v4
+     
+      - name: Setup Java 17
+        uses: action/setup-java@v4
+        with:
+          distribution: 'temruin'
+          java-vrsion: '17'
+
+      - name: Build code
+        run: mvn clean package
+
+      - name: Build verify
+        run: ls -lh target/
