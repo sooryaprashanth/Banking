@@ -24,3 +24,34 @@ jobs:
 
       - name: Build verify
         run: ls -lh target/
+
+      - name: Docker Login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Docker Push Image
+        id: docker_build
+        uses: docker/build-push-action@v7.1.0
+        with:
+          context: .
+          push: true
+          tags: |
+            soorya8055/banking:latest
+            soorya8055/banking:${{ github.run_number }}
+      
+      - name: Show Docker image tags
+        run: |
+          echo "Docker image built and pushed:"
+          echo " - soorya8055/banking:latest"
+          echo " - soorya8055/banking:${{ github.run_number }}"
+          
+      - name: List Docker images
+        run: docker images
+        
+      - name: Show image digest
+        run: |
+          echo "Image digest:"
+          echo "${{ steps.docker_build.outputs.digest }}"
+    
