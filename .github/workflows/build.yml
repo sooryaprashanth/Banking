@@ -23,7 +23,7 @@ jobs:
         run: mvn clean package
 
       - name: Build verify
-        run: ls -lh target/
+        run: ls -lh */
 
       - name: Docker Login
         uses: docker/login-action@v3
